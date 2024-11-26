@@ -1,0 +1,213 @@
+<!--IN CASE YOU FUCK UP THE OTHER ONE-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+
+    <link rel="stylesheet" href="styleApp.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=VT323&display=swap" rel="stylesheet">
+
+    <!--iconscout CSS-->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+
+</head>
+<body>
+    <div class = "container">
+        <!--<h1>Application</h1>-->
+        <header>Personal Details</header>
+        <!-- Add this in your HTML to show submission status -->
+<div id="message" style="display:none; padding: 10px; margin-top: 10px; border-radius: 5px;"></div>
+
+
+        <form id = 'registrationForm'>
+            <div class = "form first">
+                <!--<header>Personal Details</header>-->
+                <div class = "details personal">
+                    <span class = "title">Personal Details</span>
+
+                    <div class = "fields">
+                        <div class = "input-field">
+                            <label>First Name</label>
+                            <input type="text" name = "firstname" placeholder="Enter your first name" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Last Name</label>
+                            <input type="text" name = "lastname" placeholder="Enter your last name" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Date of Birth</label>
+                            <input type="date"  name = "dob" placeholder="Enter your birth date" required>
+                        </div>
+
+                        <!--<div class = "input-field">
+                            <label>Email</label>
+                            <input type="email" name = "email" placeholder="Enter your email" required>
+                        </div>-->
+
+
+
+                        <div class = "input-field">
+                            <label>Mobile Number</label>
+                            <input type="number" name = "mobile" placeholder="Enter your mobile number" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Email</label>
+                            <input type="email" name = "email" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Major</label>
+                            <input type="text" name = "major" placeholder="Enter your major" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "details ID">
+                    <span class = "title">Identity Details</span>
+
+                    <div class = "fields">
+                        <div class = "input-field">
+                            <label>Current High School</label>
+                            <input type="text" name = "hsname" placeholder="Enter current high school" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>High School City</label>
+                            <input type="text" name="hscity" placeholder="Enter high school city" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>High School Zipcode</label>
+                            <input type="number" name="hszip" placeholder="Enter high school zipcode" required>
+                        </div>
+
+
+
+                        <div class = "input-field">
+                            <label>College/Univerisity</label>
+                            <input type="text" name="cuname" placeholder="Enter college/universiy name" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>College/Universtiy City</label>
+                            <input type="text" name="cucity" placeholder="Enter college city" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>College/University Zipcode</label>
+                            <input type="text" name="cuzip" placeholder="Enter college zipcode" required>
+                        </div>
+                    </div>
+
+                    <button class = "nxtButton">
+                        <span class = "btnText">Next</span>
+                        <i class = "uil uil-navigator"></i>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class = "form second">
+                <div class = "details address">
+                    <span class = "title">Family</span>
+
+                    <div class = "fields">
+                        <div class = "input-field">
+                            <label>Parent/Legal Guardian Name</label>
+                            <input type="text" name ="p1name" placeholder="Enter parent name" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Parent/Legal Guardian Mobile</label>
+                            <input type="number" name ="p1mobile" placeholder="Enter parent mobile" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Parent/Guardian Email</label>
+                            <input type="email" name="p1email" placeholder="Enter parent email" required>
+                        </div>
+
+
+
+                        <div class = "input-field">
+                            <label>Parent 2/Legal Guardian Name</label>
+                            <input type="text" name="p2name" placeholder="Enter parent name" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Parent 2/Legal Guardian Mobile</label>
+                            <input type="number" name="p2mobile" placeholder="Enter parent mobile" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Parent 2/Legal Guardian Email</label>
+                            <input type="email" name="p2email" placeholder="Enter parent email" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "details family">
+                    <span class = "title">Family Details</span>
+
+                    <div class = "fields">
+                        <div class = "input-field">
+                            <label>Student Award</label>
+                            <input type="text" name="stuaward" placeholder="Enter student award" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Student Activity</label>
+                            <input type="text" name="stuactivity" placeholder="Enter student activity" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Student Community Service</label>
+                            <input type="text" name="stucomm" placeholder="Enter student community service" required>
+                        </div>
+
+
+
+                        <div class = "input-field">
+                            <label>Student Employment</label>
+                            <input type="text" name = "stuemp" placeholder="Enter student employment" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Personal Statement</label>
+                            <input type="text" name = "stuperstmt" placeholder="Enter personal statement" required>
+                        </div>
+
+                        <div class = "input-field">
+                            <label>Upload Docs</label>
+                            <input type="text" name = "stuupload" placeholder="WIP" required>
+                        </div>
+                    </div>
+
+                    <div class = "buttons">
+                        <button class = "backButton">
+                            <span class = "btnText">Back</span>
+                            <i class = "uil uil-navigator"></i>
+                        </button>
+    
+                        <button type = "submit" class = "submit">
+                            <span class = "submit">Submit</span>
+                            <i class = "uil uil-navigator"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+    
+</body>
+</html>
