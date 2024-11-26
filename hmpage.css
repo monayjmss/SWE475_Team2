@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+    font-family: 'Baskervville SC', cursive;
+}
+h1{
+    padding-top: 55px;
+    top: 0;
+    left: 0;
+    font-size: smaller;
+}
+body{ 
+    min-height: 100vh; 
+    display: flex; 
+    background-color: white;
+}
+#main-content{
+    top: 50;
+    left: 50;
+}
+#logo{
+    top: 0;
+    left: 0;
+}
+
