@@ -10,17 +10,27 @@ h1{
     left: 0;
     font-size: smaller;
 }
-body{ 
-    min-height: 100vh; 
-    display: flex; 
-    background-color: white;
+body {
+    font-family: 'Baskervville SC', cursive;
+    margin: 0;
+    padding-bottom: 100;
+    background-color: #f8f9fa;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    overflow: hidden; /* Prevent scrolling */
 }
-#main-content{
-    top: 50;
-    left: 50;
+.logo {
+    max-width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+    max-height: 150px; /* Optional: Limit the height */
 }
-#logo{
-    top: 0;
-    left: 0;
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0; /* Add some padding for spacing */
+    background-color: #f8f9fa; /* Optional background color */
 }
-

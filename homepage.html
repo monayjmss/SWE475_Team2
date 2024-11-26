@@ -1,49 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Application Status Portal</title>
-  <link rel="stylesheet" href="hmpage.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Status Portal</title>
+<link rel="stylesheet" href="hmpage.css">
 </head>
 <body>
-  <header class="header">
-  </header>
-  
-  <main class="main-content">
-    <center>
-    <section class="status-check">
-      <h2>NCBW-QCMC Application Portal</h2>
-      <form id="statusForm">
-        <label for="applicationId">Application ID:</label>
-        <input type="text" id="applicationId" name="applicationId" placeholder="Enter your Application ID" required>
-        <button type="submit">Check Status</button>
-      </form>
-      <div id="statusResult" class="status-result">
-        <!-- Status will be displayed here -->
-      </div>
-    </section>
-    </center>
-  </main>
-  
-  <center>
-  <script>
-    // Example JavaScript to handle form submission (optional)
-    document.getElementById('statusForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const applicationId = document.getElementById('applicationId').value;
-      const resultDiv = document.getElementById('statusResult');
+<header class="header">
+    <image src="logo2.png" alt="logo" class = "logo">
+</header>
 
-      // Mock status check (replace with actual API/DB call logic)
-      if (applicationId === "12345") {
-        resultDiv.textContent = "Application Approved!";
-        resultDiv.style.color = "green";
-      } else {
-        resultDiv.textContent = "Application ID not found.";
-        resultDiv.style.color = "red";
-      }
-    });
-  </script>
-</center>
+<main class="main-content">
+<section class="status-check">
+    <h2>NCBW-QCMC Application Portal</h2>
+    <form id="statusForm">
+    <label for="applicationId">Application ID:</label>
+    <input type="text" id="applicationId" name="applicationId" placeholder="Enter your Application ID" required>
+    <button type="submit">Check Status</button>
+    </form>
+    <div id="statusResult" class="status-result">
+    <!-- Status will be displayed here -->
+    </div>
+</section>
+</main>
+
+<script>
+// Example JavaScript to handle form submission (optional)
+document.getElementById('statusForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const applicationId = document.getElementById('applicationId').value;
+    const resultDiv = document.getElementById('statusResult');
+
+    // Mock status check (replace with actual API/DB call logic)
+    if (applicationId === "12345") {
+    resultDiv.textContent = "Application Approved!";
+    resultDiv.style.color = "green";
+    } else {
+    resultDiv.textContent = "Application ID not found.";
+    resultDiv.style.color = "red";
+    }
+});
+</script>
 </body>
 </html>
