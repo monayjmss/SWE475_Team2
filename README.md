@@ -1,5 +1,13 @@
 # SWE475_Team2
 
+## Coding Conventions
+We will be using [blah blah] case
+Every function will have a header that looks like
+/**
+ * description
+ * @param {} param - description
+ * @return {TYPE} description
+ */
 
 
 ## Testing
