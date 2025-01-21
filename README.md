@@ -1,7 +1,8 @@
 # SWE475_Team2
 
 ## Coding Conventions
-We will be using [blah blah] case
+We will be using [blah blah] case.
+
 Every function will have a header that looks like
 /**
  * description
