@@ -41,7 +41,7 @@ body{
     align-items: center;
     min-height: 100vh;
     /*background-color: goldenrod;*/
-    background: url('Images/background2.jpeg') no-repeat;
+    background: url('../Images/background2.jpeg') no-repeat;
     background-size: cover;
     background-position: center;
     padding: 50px 0 10px;

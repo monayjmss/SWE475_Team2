@@ -14,11 +14,11 @@ app.use(express.urlencoded({extended: true}));
 
 
 app.get('/', (req, res) =>{
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, '/Front_end/index.html'));
 });
 //route for registration form
 app.get('/apply.html', (req,res) => {
-    res.sendFile(path.join(__dirname, 'apply.html')); //make sure in same directory... cause its not rn 
+    res.sendFile(path.join(__dirname, '/Front_end/PhaseI/apply.html')); //make sure in same directory... cause its not rn 
 });
 
 

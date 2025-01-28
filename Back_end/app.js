@@ -13,7 +13,7 @@ app.use(express.static('PhaseI'));
 
 //API ROUTES
 app.get('/form', (req,res) => {
-    res.sendFile(__dirname + '/PhaseI/apply.html');
+    res.sendFile(__dirname + '/Front_end/PhaseI/apply.html');
 
 })
 
