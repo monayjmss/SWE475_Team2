@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+    font-family: 'Baskervville SC', cursive;
+}
+
+header{
+    margin-top: 40px;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+table, tr, th{
+    margin-left: 20px;
+    margin-top: 75px;
+    border: 1px outset black;
+    border-collapse: collapse;
+    box-sizing: border-box; 
+    font-family: 'Baskervville SC', cursive;
+    font-size: 20px;
+    height: 43px;
+    width: 135px;
+    text-align: center;
+}
+
+.logo{
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+img{
+    height: 85px;
+    width: 85px;
+}
+
+button{
+    border: none;
+    font-family: 'Baskervville SC', cursive;
+    font-size: 20px;
+    background-color: white;
+}
+

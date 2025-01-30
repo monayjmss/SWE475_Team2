@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link rel = "stylesheet" href = "styles.css">
-    <script src = "valid.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=VT323&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 
 
 </head>
@@ -22,7 +23,7 @@
             <h1>Login</h1>
 
             <div class = "input-box">
-                <input type="username", placeholder="username" required>
+                <input type="text", id="username" placeholder="username" required>
                 <i class='bx bxs-user-circle'></i>
             </div>
 
@@ -37,16 +38,18 @@
                 </label>
                 <a href="#">Forgot Password</a>
             </div>
-
-            <button type = "submit" class="btn">Login</button>
+            <div class = "onsubmit">
+                <button type = "submit" class="btn" onclick="window.location.href='http://127.0.0.1:5500/Front_end/dashboard.html';">Login</button>
+            </div>
+            
 
             <div class = "register-link">
-                <p>Need to Submit an Application? <a href="apply.html">Apply</a></p>
+                <p>Need to Submit an Application? <a href="http://127.0.0.1:5500/Front_end/PhaseI/apply.html">Apply</a></p>
             </div>
 
         </form>
     </div>
 </div>
-    
+<script src="Back_end\valid.js"></script>
 </body>
 </html>
