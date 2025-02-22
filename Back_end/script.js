@@ -84,10 +84,10 @@ form.addEventListener('submit', async function(event){
         try {
             responseData = JSON.parse(responseText);
         } catch (e) {
-            responseData = { message: responseText };
+            responseData = { success: false, message: responseText };
         }
-        //success response handling
-        messageElement.textContent = "data submited successfully";
+        
+        /*messageElement.textContent = "data submited successfully";
         messageElement.style.backgrounColor = "green";
         messageElement.style.color = "black";
         submitButton.disabled = false;
@@ -97,8 +97,20 @@ form.addEventListener('submit', async function(event){
         setTimeout(function(){
             messageElement.textContent = "";
             messageElement.style.display = "none";
-        }, 2600);
-    
+        }, 2600);*/
+
+        //success response handling
+        if (responseData.success) {
+            //redirect to the submitted page
+            window.location.href = '/Front_end/submitted.html';
+        } else {
+            messageElement.textContent = "Error submitting application. Please try again.";
+            messageElement.style.backgroundColor = "red";
+            messageElement.style.color = "white";
+            messageElement.style.display = "block";
+            submitButton.disabled= false;
+        }
+
     } catch(error) {
         console.error('Error', error);
         messageElement.textContent = "An error occurred while submitting the form";
