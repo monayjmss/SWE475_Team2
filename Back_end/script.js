@@ -36,7 +36,7 @@ nextButton.addEventListener("click", function(e) {
 backButton.addEventListener("click", () => form.classList.remove('secActive'));
 
 //form submission
-form.addEventListener('submit', function(event){
+form.addEventListener('submit', async function(event){
     event.preventDefault();
 
     //show submitting message
@@ -53,20 +53,43 @@ form.addEventListener('submit', function(event){
         data[key] = value;
     });
 
-    //send the form data to the server using a POST request using fetch
-    fetch('https://script.google.com/macros/s/AKfycbyGCRc4aY6qisV_PXPrB8muMBV_7rHIQ7i2sq7sN6pj073A4Xp_UARHChN7phvQtz-m/exec', {
-        method:'POST', 
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body:new URLSearchParams(data).toString(), //convert data to JSON string
-    })
-    .then(response => response.json())
-    .then(data => {
+    try{
+        //send the form data to the server using a POST request using fetch
+        const googleResponse=await fetch('https://script.google.com/macros/s/AKfycbyGCRc4aY6qisV_PXPrB8muMBV_7rHIQ7i2sq7sN6pj073A4Xp_UARHChN7phvQtz-m/exec', {
+            method:'POST', 
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body:new URLSearchParams(data).toString(), //convert data to JSON string
+        });
+        //also send to local servers, testing purposes
+        const localResponse=await fetch('/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                fullName: `${data.firstname} ${data.lastname}`,
+                email: data.email,
+                dob: data.dob,
+                mobile: data.mobile
+                //can add whatever other fields we need
+            }),
+        });
+        //local server response
+        const responseText = await localResponse.text();
+        console.log('Local server response:', responseText);
+        //try to parse response as JSON
+        let responseData;
+        try {
+            responseData = JSON.parse(responseText);
+        } catch (e) {
+            responseData = { message: responseText };
+        }
         //success response handling
         messageElement.textContent = "data submited successfully";
         messageElement.style.backgrounColor = "green";
-        messageElement.style.color = "beige";
+        messageElement.style.color = "black";
         submitButton.disabled = false;
         //alert(data); //display success message from server
         form.reset(); //optionally reset form fields
@@ -75,11 +98,11 @@ form.addEventListener('submit', function(event){
             messageElement.textContent = "";
             messageElement.style.display = "none";
         }, 2600);
-    })
-    .catch(error => {
+    
+    } catch(error) {
         console.error('Error', error);
         messageElement.textContent = "An error occurred while submitting the form";
         messageElement.style.display = "block";
         submitButton.disabled = false;
-    });
+    }
 });
