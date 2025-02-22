@@ -11,19 +11,6 @@ header{
     font-size: 20px;
 }
 
-table, tr, th{
-    margin-left: 20px;
-    margin-top: 75px;
-    border: 1px outset black;
-    border-collapse: collapse;
-    box-sizing: border-box; 
-    font-family: 'Baskervville SC', cursive;
-    font-size: 20px;
-    height: 43px;
-    width: 135px;
-    text-align: center;
-}
-
 .logo{
     position: absolute;
     right: 5px;
@@ -40,5 +27,34 @@ button{
     font-family: 'Baskervville SC', cursive;
     font-size: 20px;
     background-color: white;
+}
+
+#showcase{
+    border-collapse: collapse;
+    width: 100%;
+    font-family: 'Baskervville SC', cursive;
+    font-size: 12px;
+}
+
+#showcase td, #showcase th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#showcase th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: gold;
+    color: whit;
+}
+
+#showcase tr:nth-child(odd){background-color: gray;}
+
+
+
+
+.titles{
+    background-color: gray;
 }
 
