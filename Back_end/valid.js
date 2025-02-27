@@ -8,7 +8,7 @@ function myfunction(){
         x.type = "password";
     }
 }
-
+const bcrypt = window.bcrypt || require('bcryptjs'); 
 //    function validate(){
 //        event.preventDefault();
 //        var password = document.getElementById("password");
@@ -33,8 +33,10 @@ async function validate(event) {
     }
 
     try {
+        console.log("Fetching the Excel file...");
+
         // Fetch and read the Excel file
-        let response = await fetch("C:\Users\Owner\OneDrive\Desktop\SWE475_Team2\Back_end\login.xlsx"); // Adjust path if needed
+        let response = await fetch("../Back_end/login.xlsx"); 
         let arrayBuffer = await response.arrayBuffer();
         let workbook = XLSX.read(arrayBuffer, { type: "array" });
 
@@ -43,21 +45,28 @@ async function validate(event) {
 
         // Convert sheet to JSON
         let data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+        console.log("Excel data:", data);
 
-        // Check credentials
+
         let validUser = false;
 
         for (let i = 1; i < data.length; i++) { // Start from index 1 to skip headers
-            if (data[i][0] === username && data[i][1] === password) {
+            let storedUsername = data[i][0];  // Username from Excel
+            let storedHashedPassword = data[i][1]; // Hashed password from Excel
+
+            console.log(`Checking user: ${storedUsername}`);
+            if (storedUsername === username) {
+                let match = await bcrypt.compare(password, storedHashedPassword);
+                if (match) {
                 validUser = true;
                 break;
             }
         }
-
+    }
         if (validUser) {
             alert("Login successful!");
             // Redirect to another page if needed
-            window.location.href = "C:\Users\Owner\OneDrive\Desktop\SWE475_Team2\Front_end\homepage.html"; // Adjust target page
+            window.location.href = "../Front_end/homepage.html"; 
         } else {
             alert("Invalid username or password. Please try again.");
         }
