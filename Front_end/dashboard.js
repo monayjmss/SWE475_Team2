@@ -1,6 +1,6 @@
 // Load AWS SDK
 AWS.config.update({
-    
+     
     region: "us-east-1"  // Change to your AWS region
 });
 
