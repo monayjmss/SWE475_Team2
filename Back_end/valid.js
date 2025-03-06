@@ -19,6 +19,7 @@ const bcrypt = window.bcrypt || require('bcryptjs');
 //        } else{ 
 //            alert("Login Failed");
 //        }
+
 //    }
 
 async function validate(event) {
