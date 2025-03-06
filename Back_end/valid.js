@@ -12,7 +12,7 @@ const bcrypt = window.bcrypt || require('bcryptjs');
 //    function validate(){
 //        event.preventDefault();
 //        var password = document.getElementById("password");
-//
+
 //        if (password.value.length >= 8){
 //            window.location.replace("homepage.html");
 //            return false;
