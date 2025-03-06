@@ -1,41 +1,69 @@
-<HTML>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel = "stylesheet" href = "dash.css">
+    <title>Application Dashboard</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.935.0.min.js"></script>
+    <script defer src="dashboard.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .search-box { margin-bottom: 10px; padding: 5px; width: 300px; }
+        .pagination { margin-top: 10px; }
+        .pagination button { margin-right: 5px; padding: 5px 10px; }
+        .top-left-image { position: static; top: 10px; /* Distance from the top */ left: 10px; /* Distance from the left */ width: 100px; /* Adjust the width */ height: auto; /* Maintain aspect ratio */}
+        .reviewed-yes { color: green; font-weight: bold; }
+        .reviewed-no { color: red; font-weight: bold; }
+        .renewed-yes { color: green; font-weight: bold; }
+        .renewed-no { color: red; font-weight: bold; }
+        .category-traditional { color: goldenrod; font-weight: bold; }
+        .category-non-traditional { color: blue; font-weight: bold; }
+        .modal {display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); width: 300px; text-align: center;}
+        .modal-content {position: relative;}
+        .close {cursor: pointer; float: right; font-size: 20px;}
+    </style>
 </head>
-
 <body>
-    <header><b>NCBW-QCMC</b></header>
-    <!--<table>
-        <tr><th><button>Dashboard</button></th></tr>
-        <tr><th><button>Applicants</button></th></tr>
-        <tr><th><button>Judges</button></th></tr>
-        <tr><th><button>Funds</button></th></tr>
-        <tr><th><button>Programs</button></th></tr>
-        <tr><th><button>Invoices</button></th></tr>
-        <tr><th><button>Settings</button></th></tr>
-        <tr><th><button>Get Help</button></th></tr>
-    </table>-->
+    <img src="..\Images\logo2.png" alt="Logo" class="top-left-image">
+    <h2>Application Dashboard</h2>
+    
 
-    <div class="logo">
-        <img src="../Images/logo2.png" alt="Logo">
+    <!-- Search bar -->
+    <input type="text" id="search" class="search-box" placeholder="Search applications..." onkeyup="filterTable()">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name (Last, First)</th>
+                <th>Application Number</th>
+                <th>Category</th>
+                <th>Score</th>
+                <th>Rank</th>
+                <th>Renewed</th>
+                <th>Reviewed</th>
+            </tr>
+        </thead>
+        <tbody id="appTable">
+            <!-- Data will be dynamically inserted here -->
+        </tbody>
+    </table>
+    <button onclick="saveApplicationsToS3()">Save Changes</button>
+
+    <!-- Pagination controls -->
+    <div class="pagination">
+        <button onclick="prevPage()">Previous</button>
+        <span id="page-info"></span>
+        <button onclick="nextPage()">Next</button>
     </div>
 
-    <table id="showcase">
-        <tr> 
-            <th>Application Title</th>
-            <th>Application Number</th>
-            <th>Category</th>
-            <th>Applicant</th>
-            <th>Score</th>
-            <th>Rank</th>
-            <th>Renewed</th>
-            <th>Reviewed</th>
-        </tr>
-    </table>
-
-    
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="modal-text"></p>
+        </div>
+    </div>
 </body>
-</HTML>
+</html>
