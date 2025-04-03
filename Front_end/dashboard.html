@@ -7,10 +7,11 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.935.0.min.js"></script>
     <script defer src="dashboard.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #fffaf0; /* Light cream */color: #000;}
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background-color: white; box-shadow: 0 0 10px rgba(197, 162, 0, 0.2); /* subtle gold glow */}
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         th { background-color: #f4f4f4; }
+        tr:nth-child(even) {background-color: #fdf7e2;}
         .search-box { margin-bottom: 10px; padding: 5px; width: 300px; }
         .pagination { margin-top: 10px; }
         .pagination button { margin-right: 5px; padding: 5px 10px; }
@@ -24,6 +25,64 @@
         .modal {display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); width: 300px; text-align: center;}
         .modal-content {position: relative;}
         .close {cursor: pointer; float: right; font-size: 20px;}
+        #modal {position: fixed;max-height: 80vh;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: normal;
+            text-align: left;top: 1%; /* move it up from the center */left: 50%;transform: translate(-50%, 0);width: 250px; /* make it smaller */height: 200px;padding: 20px;background-color: white;border: 1px solid #ccc;border-radius: 8px;box-shadow: 0 5px 15px rgba(0,0,0,0.3);z-index: 1000;display: none;}
+        
+        #modal-text {font-size: 14px;line-height: 1.5;white-space: pre-wrap; /* preserves line breaks */}
+        #modal-overlay {position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.4);z-index: 999;display: none;}
+        td button {background: none;border: none;font-size: 16px;cursor: pointer;padding: 4px;}
+        td button:hover {transform: scale(1.2);}
+        button {
+            background-color: #222222;
+            color: #fdf7e2;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #FFD700;
+            color: #000;
+        }
+
+        #email-modal {
+            z-index: 1001 !important;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        #email-modal-overlay {
+            z-index: 1000 !important;
+        } 
+        
+
+        #copy-link-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #FFD700;
+            color: #000;
+            padding: 10px 15px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: 0.3s ease;
+            z-index: 9999;
+        }
+        
+        #copy-link-btn:hover {
+            background-color: #222;
+            color: #FFD700;
+        }
+        
     </style>
 </head>
 <body>
@@ -40,10 +99,11 @@
                 <th>Name (Last, First)</th>
                 <th>Application Number</th>
                 <th>Category</th>
+                <th>Status</th>
+                <th>Submission Date</th>
                 <th>Score</th>
-                <th>Rank</th>
-                <th>Renewed</th>
-                <th>Reviewed</th>
+                <th>More</th>
+                <th>Email</th>
             </tr>
         </thead>
         <tbody id="appTable">
@@ -65,5 +125,31 @@
             <p id="modal-text"></p>
         </div>
     </div>
+    <div id="modal-overlay"></div>
+
+
+    <div id="email-modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0, 0, 0, 0.4); z-index: 999;"></div>
+
+    <div id="email-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeEmailModal()">&times;</span>
+            <h3>Send Email</h3>
+            <label for="emailTo">To:</label>
+            <input type="email" id="emailTo" readonly style="width: 100%; margin-bottom: 10px;" />
+            
+            <label for="emailSubject">Subject:</label>
+            <input type="text" id="emailSubject" style="width: 100%; margin-bottom: 10px;" />
+            
+            <label for="emailBody">Message:</label>
+            <textarea id="emailBody" rows="10" style="width: 100%;"></textarea>
+            
+            <br><br>
+            <button onclick="sendEmailFromModal()">Send Email</button>
+        </div>
+    </div>
+
+    <button id="copy-link-btn" onclick="copyApplicationLink()">📋 Copy Link</button>
+
+
 </body>
 </html>
