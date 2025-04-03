@@ -1,0 +1,327 @@
+/*Google Fonts*/
+/*@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');*/
+
+html,body{
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 400;
+    font-style: normal;
+    box-sizing: border-box;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+header{
+    text-align: center;
+    font-weight: 900;
+    font-size: 30px;
+}
+h1{
+    font-size: 20px;
+    font-weight: 900;
+    /* text-decoration: underline; */
+    font-style: italic;
+}
+span{
+    font-weight: 900; 
+    margin: 0;
+}
+p{
+    font-size: 13px;
+}
+
+.responsive{
+    width: 20%;
+    height: auto;
+}
+ul{
+    margin-top: 0px;
+    font-size: 13px;
+}
+
+.container{
+    margin-top: 20px;
+    background: rgb(244, 243, 243);
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    min-height: 100vh;
+    font-size: 13px;
+
+}
+.main{
+    margin: 10px;
+}
+
+input[type="date"],
+input[type="text"], 
+input[type="email"],
+input[type="password"],
+select,
+input[type = "tel"], 
+input[type = "number"],
+textarea
+ {
+    width: 100%;               /* Full width */
+    padding: 10px;             /* Padding for better appearance */
+    box-sizing: border-box;    /* Ensure padding doesn't affect width */
+    border: 1px solid #ddd;    /* Border */
+    border-radius: 2px;        /* Rounded corners */
+    display: block;            /* Make it a block-level element */
+    height: 35px;              /* Explicit height */
+    
+    /* Remove browser-specific styling */
+    -webkit-appearance: auto;  /* Chrome/Safari */
+    -moz-appearance: auto;     /* Firefox */
+    appearance: auto;          /* For other browsers */
+}
+textarea {
+    height: 150px;             /* Set a fixed height for the text area */
+}
+
+/* inline for 2 column item */
+.form-group2 {
+    display: flex;
+    gap: 5px;         /* Space between each item */
+    width: 100%;
+}
+
+.form-item2 {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+/* inline for 3 column item */
+.form-group3 {
+    display: flex;
+    gap: 5px;         /* Space between each item */
+    width: 100%;
+}
+
+.form-item3 {
+    display: flex;
+    flex-direction: column;  /* Stack label and input vertically */
+    width: 40%;               /* Adjust the width for each input pair (you can modify this) */
+}
+
+label{
+    /* display: block; */
+    font-weight: bold;
+}
+
+/* label, */
+input[type = "text"],
+select {
+    display: block;  /* Ensure each element takes a full line */
+    width: 100%;     /* Make labels, inputs, and selects full width */
+    margin-bottom: 10px; /* Adds space between each label/input/select pair */
+}
+input[type="radio"]{
+    display: block; /* Ensure each element takes a full line */
+
+}
+
+
+
+
+/* Reset fieldset and legend default styles */
+fieldset {
+    margin: 0;  /* Remove default margin */
+    padding: 10px;  /* Optional: Add padding for spacing */
+    border: 1px solid #ddd;  /* Add custom border style */
+    border-radius: 2px;  /* Optional: Rounded corners */
+    
+}
+
+legend{
+    font-size: 16px;  /* Ensure consistent font size */
+    font-weight: bold;  /* Set a consistent font weight */
+    margin-bottom: 10px;  /* Add some space below the legend */
+    padding: 0;  /* Remove padding around the legend text */
+    display: inline-flex;  /* Ensure each element takes a full line */
+
+}
+
+
+ table{ 
+    border: 1px solid black;
+    text-align: center;
+ }
+
+
+
+.box{ 
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    /* border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px; */
+}
+
+.upload-area-title{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size:20px;
+    font-weight: 600;
+}
+
+.uploadlabel{
+    width: 100%;
+    min-height: 100px;
+    background: rgb(255, 252, 244); /*background of file upload box*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px dashed goldenrod;
+    cursor: pointer;
+    margin: 10px 0; /* Adjust this margin to align the upload box and uploaded box */
+}
+
+input[type="file"]{
+    display: none; 
+}
+
+.uploadlabel span{
+    font-size: 70px;
+    /*color: #4a18ff; not working*/
+}
+
+.uploaded{
+    margin: 30px 0;
+    font-size:16px;
+    font-weight: 700;
+    color: #a5a5a5;
+}
+
+.showfilebox{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 10px 15px;
+    box-shadow: #0000000d 0px 0px 0px 1px, #d1d5db3d 0px 0px 0px 1px inset; /*border around uploaded doc box*/
+
+}
+
+.showfilebox .left{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+}
+
+.filetype{
+    background: gold;
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 20px;
+    text-transform: capitalize;
+    font-weight: 700;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+.left .h3 { 
+    font-weight: 600;
+    font-size: 18px;
+    color: #292f42;
+    margin: 0;
+}
+
+.right span{
+    background: gold;
+    color: #fff;
+    width: 25px;
+    height: 25px; 
+    font-size: 25px;
+    line-height: 25px;
+    display: inline-block;
+    text-align: center;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /*signatyre stuff */
+
+ .flex-row {
+    display: flex;
+}
+
+.wrapper { 
+    margin-left: 35px;
+    border: 1px solid darkslategrey;
+    /* padding:  10px;  */
+    width:100%; /*taes 100% of the parents container width*/
+    /* max-width: 100%; esures it doesnt exceed the screen size */
+    /*span*/
+    /*max-width: 500px;*/
+    box-sizing: border-box; /* Ensures padding is included in width */
+
+}
+canvas#signature-pad1, 
+canvas#signature-pad2 { 
+    background: #fff;
+    width: 100%; 
+    /* height: auto;  */
+    height: 100px;
+    cursor: crosshair;  /*adjust this for consistent height*/
+
+    margin-left: 0px;
+    /*margin-right: 0px; */
+    
+}
+button#clear { 
+    height: 100%;
+    background: goldenrod; 
+    border: 1px solid transparent; 
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+
+    margin-left: -40px;
+    margin-right: -40px;
+    border: 0.5px solid darkslategrey;
+    
+}
+button#clear span { 
+    transform: rotate(90deg);
+    display: block;
+}
+
+.inline{
+    display: flex;
+    
+    width: 100%;
+}
+
+

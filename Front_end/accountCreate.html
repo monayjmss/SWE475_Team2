@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="styleApp.css">
+</head>
+<body>
+    <div class="container">
+        <header>Create Your Account</header>
+        <form id="accountForm">
+            <div class="fields">
+                <div class="input-field">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-field">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Create a username" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Create a password" required>
+                </div>
+
+                <div class="input-field">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirmPassword" placeholder="Confirm your password" required>
+                </div>
+            </div>
+
+            <button type="submit" class="submit">
+                <span class="btnText">Submit</span>
+                <i class="uil uil-navigator"></i>
+            </button>
+            <script>
+                document.getElementById('accountForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const password = document.querySelector('input[name="password"]').value;
+                    const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
+                    
+                    // Validate passwords match
+                    if (password !== confirmPassword) {
+                        alert('Passwords do not match!');
+                        return; // Stop form submission
+                    }
+                    
+                    // Verify application was submitted
+                    if (!sessionStorage.getItem('applicationSubmitted')) {
+                        alert('Please complete the application first');
+                        window.location.href = '/apply.html';
+                        return;
+                    }
+                
+                    // Show loading state
+                    const submitBtn = document.querySelector('button[type="submit"]');
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Creating Account...';
+                    
+                    try {
+                        // Get form data
+                        const formData = new FormData(this);
+                        const accountData = Object.fromEntries(formData.entries());
+                        
+                        // Remove confirmPassword from data before sending
+                        delete accountData.confirmPassword;
+                        
+                        // Send to server
+                        const response = await fetch('/api/register-with-application', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                account: accountData,
+                                application: JSON.parse(sessionStorage.getItem('applicationData') || '{}')
+                            })
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(await response.text());
+                        }
+                        
+                        // Show success message
+                        const confirmation = confirm('Account created successfully! Click OK to login.');
+                        if (confirmation) {
+                            // Clear temporary storage
+                            sessionStorage.removeItem('applicationSubmitted');
+                            sessionStorage.removeItem('applicationData');
+                            window.location.href = '/index.html';
+                        }
+                        
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Account creation failed: ' + error.message);
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Create Account';
+                    }
+                });
+                </script>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1356.0/aws-sdk.min.js"></script>
+    <script src="/accountCreate.js"></script>
+    
+</body>
+</html>

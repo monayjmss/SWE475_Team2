@@ -16,10 +16,10 @@
 <body>
     <header>Welcome to the NCBW-QCMC Scholarship Foundation</header>
     <div class = "wrapper-container">
-    <img src="../Images/logo.jpeg" alt="Logo">
+    <img src="/Images/logo.jpeg" alt="Logo">
 
     <div class = "wrapper">
-        <form onsubmit="validate(event)">
+        <form id="loginForm">
             <h1>Login</h1>
 
             <div class = "input-box">
@@ -36,20 +36,26 @@
             <div class = "remember-forgot">
                 <label><input type="checkbox">Remember Me
                 </label>
-                <a href="#">Forgot Password</a>
+                <a href="/forgotPassword.html" id="forgotPasswordLink">Forgot Password</a>
             </div>
             <div class = "onsubmit">
                 <button type = "submit" class="btn">Login</button>
             </div>
+
             
 
             <div class = "register-link">
-                <p>Need to Submit an Application? <a href="http://127.0.0.1:5000/Front_end/PhaseI/apply.html">Apply</a></p>
+                <p>Need to Submit an Application? <a href="http://localhost:3000/PhaseI/apply.html">Apply</a></p>
             </div>
-
+            <script>
+                document.getElementById('applyLink').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = '/apply.html';
+                });
+                </script>
         </form>
     </div>
 </div>
-<script src="../Back_end/valid.js"></script>
+<script src="/loginVerify.js"></script>
 </body>
 </html>

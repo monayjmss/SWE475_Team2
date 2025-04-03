@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judges Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        button { margin-top: 10px; padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <h2>Judges Dashboard</h2>
+    <form id="addJudgeForm">
+        <input type="text" id="name" placeholder="Judge Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="text" id="expertise" placeholder="Expertise" required>
+        <button type="submit">Add Judge</button>
+    </form>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Expertise</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="judgesTableBody"></tbody>
+    </table>
+
+    <script>
+        async function fetchJudges() {
+            const response = await fetch('/api/judges');
+            const judges = await response.json();
+            const tableBody = document.getElementById('judgesTableBody');
+            tableBody.innerHTML = '';
+
+            judges.forEach(judge => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${judge.name}</td>
+                    <td>${judge.email}</td>
+                    <td>${judge.expertise}</td>
+                    <td><button onclick="deleteJudge(${judge.id})">Remove</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function addJudge(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const expertise = document.getElementById('expertise').value;
+
+            const response = await fetch('/api/judges', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, expertise })
+            });
+
+            if (response.ok) {
+                document.getElementById('addJudgeForm').reset();
+                fetchJudges();
+            }
+        }
+
+        async function deleteJudge(id) {
+            await fetch(`/api/judges/${id}`, { method: 'DELETE' });
+            fetchJudges();
+        }
+
+        document.getElementById('addJudgeForm').addEventListener('submit', addJudge);
+        fetchJudges();
+    </script>
+</body>
+</html>
