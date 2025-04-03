@@ -24,7 +24,7 @@
 <div id="message" style="display:none; padding: 10px; margin-top: 10px; border-radius: 5px;"></div>
 
 
-        <form id = 'registrationForm'>
+        <form id = 'applicationForm'>
             <div class = "form first">
                 <!--<header>Personal Details</header>-->
                 <div class = "details personal">
@@ -45,13 +45,6 @@
                             <label>Date of Birth</label>
                             <input type="date"  name = "dob" placeholder="Enter your birth date" required>
                         </div>
-
-                        <!--<div class = "input-field">
-                            <label>Email</label>
-                            <input type="email" name = "email" placeholder="Enter your email" required>
-                        </div>-->
-
-
 
                         <div class = "input-field">
                             <label>Mobile Number</label>
@@ -206,8 +199,40 @@
             </div>
         </form>
     </div>
+    <script>
+    document.getElementById('applicationForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Validate form
+        if (!validateForm()) return;
+    
+        try {
+            // Collect all form data
+            const formData = new FormData(this);
+            const applicationData = Object.fromEntries(formData.entries());
+            
+            // Store in sessionStorage temporarily
+            sessionStorage.setItem('applicationData', JSON.stringify(applicationData));
+            
+            // Mark application as submitted
+            sessionStorage.setItem('applicationSubmitted', 'true');
+            
+            // Redirect to account creation
+            window.location.href = '/accountCreate.html';
+            
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error submitting application');
+        }
+    });
+    
+    function validateForm() {
+        // Add your validation logic here
+        return true;
+    }
+    </script>
 
-    <script src="../Back_end/script.js"></script>
+    <script src="/script.js"></script>
     
 </body>
 </html>

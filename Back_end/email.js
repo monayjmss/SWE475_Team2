@@ -59,6 +59,19 @@ Interview email text`
         text: `Dear ${name},
 
 Doc renewal text`
+    }),
+
+    //password reset
+    passwordResetCode: (code) => ({
+        subject: 'Password Reset Code',
+        text: `Your code is: ${code}`,
+        html: `<p>Your password reset code is: <strong>${code}</strong></p>
+               <p>This code expires in 15 minutes.</p>`
+    }),
+
+    passwordResetConfirmation: () => ({
+        subject: 'Password Reset Successful',
+        text: 'Your password has been successfully reset.\nIf you didn\'t request this change, please contact support immediately.'
     })
 };
 
@@ -98,6 +111,12 @@ function sendInterviewRequest(applicantEmail, applicantName) {
 function sendRenewalRequest(applicantEmail, applicantName, deadline) {
     return sendEmail(applicantEmail, 'renewalDocumentRequest', [applicantName, deadline]);
 }
+function sendPasswordResetCode(email, code) {
+    return sendEmail(email, 'passwordResetCode', [code]);
+}
+function sendPasswordResetConfirmation(email) {
+    return sendEmail(email, 'passwordResetConfirmation', []);
+}
 
 
 module.exports = {
@@ -105,5 +124,7 @@ module.exports = {
     sendAcceptanceEmail,
     sendRejectionEmail,
     sendInterviewRequest,
-    sendRenewalRequest
+    sendRenewalRequest,
+    sendPasswordResetCode,
+    sendPasswordResetConfirmation
 };
