@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<htnml lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Settings Dashboard</h1>
+    <form id="settingsForm">
+        <label for="emailNotifications">Email Notifications:</label>
+        <select id="emailNotifications">
+            <option value="enabled">Enabled</option>
+            <option value="disabled">Disabled</option>
+        </select>
+
+        <label for="appDeadline">Application Deadline:</label>
+        <input type="date" id="appDeadline">
+
+        <button type="submit">Save Settings</button>
+    </form>
+
+    <script src="settings.js"></script>
+</body>
+</htnml>
