@@ -25,6 +25,17 @@
         .modal {display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); width: 300px; text-align: center;}
         .modal-content {position: relative;}
         .close {cursor: pointer; float: right; font-size: 20px;}
+        .button-container { display: flex; gap: 10px; margin-bottom: 10px; }
+        .export-btn { 
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 8px 16px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 14px;
+        }
+        .export-btn:hover { background-color: #45a049; }
         #modal {position: fixed;max-height: 80vh;
             overflow-y: auto;
             font-size: 14px;
@@ -89,7 +100,6 @@
     <img src="..\Images\logo2.png" alt="Logo" class="top-left-image">
     <h2>Application Dashboard</h2>
     
-
     <!-- Search bar -->
     <input type="text" id="search" class="search-box" placeholder="Search applications..." onkeyup="filterTable()">
 
@@ -110,13 +120,18 @@
             <!-- Data will be dynamically inserted here -->
         </tbody>
     </table>
-    <button onclick="saveApplicationsToS3()">Save Changes</button>
 
     <!-- Pagination controls -->
     <div class="pagination">
         <button onclick="prevPage()">Previous</button>
         <span id="page-info"></span>
         <button onclick="nextPage()">Next</button>
+    </div>
+
+    <!-- Button container for actions -->
+    <div class="button-container">
+        <button onclick="saveApplicationsToS3()">Save Changes</button>
+        <button class="export-btn" onclick="exportFilteredApplications()">Export Applications</button>
     </div>
 
     <div id="modal" class="modal">

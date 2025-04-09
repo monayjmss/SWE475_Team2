@@ -280,7 +280,75 @@ function copyApplicationLink() {
     });
 }
 
+/* export application reports csv format*/
+function exportApplicationsAsCSV(applications) {
+    //headers for the CSV
+    const headers = [
+        'Applicant',
+        'Address',
+        'Phone',
+        'Email',
+        'High School',
+        'Graduation Date',
+        'GPA',
+        'SAT',
+        'ACT',
+        'College',
+        'College Location',
+        'Accepted',
+        'Parent/Guardian 1',
+        'Parent/Guardian 2',
+        'Awards',
+        'School/Org Activity',
+        'Volunteer/Community Activity',
+        'Work Experience',
+        'Personal Statement'
+    ];
 
+    //content
+    let csvContent = headers.join(',') + '\n';
+    //add each application as a row
+    applications.forEach(app => {
+        const row = [
+            `"${app.first_name} ${app.last_name}"`,
+            `"${app.address || ''}, ${app.city || ''}, ${app.state || ''} ${app.zipcode || ''}"`,
+            app.phone || '',
+            app.email || '',
+            `"${app.highschool || ''}"`,
+            app.graduation_date || '',
+            app.GPA || '',
+            app.SAT || '',
+            app.ACT || '',
+            `"${app.college_name || ''}"`,
+            `"${app.college_city || ''}, ${app.college_state || ''}"`,
+            app.accepted ? 'Yes' : 'No',
+            `"${app.parent1_name || ''} (${app.parent1_phone || ''})"`,
+            `"${app.parent2_name || ''} (${app.parent2_phone || ''})"`,
+            `"${app.awards || ''}"`,
+            `"${app.school_org_activity || ''}"`,
+            `"${app.vol_community_activity || ''}"`,
+            `"${app.work_experience || ''}"`,
+            `"${app.personal_statement || ''}"`
+        ];
+        csvContent += row.join(',') + '\n';
+    });
 
+    //create a download link
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `scholarship_applications_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+//Export filtered applications as CSV
+function exportFilteredApplications() {
+    const appsToExport = filteredApplications || applications || [];
+    exportApplicationsAsCSV(appsToExport);
+}
 
 fetchApplications();
