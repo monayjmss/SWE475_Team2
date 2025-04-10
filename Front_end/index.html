@@ -4,58 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
-    <link rel = "stylesheet" href = "styles.css">
+    <link rel="stylesheet" href="styles.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=VT323&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-
-
 </head>
 
 <body>
     <header>Welcome to the NCBW-QCMC Scholarship Foundation</header>
-    <div class = "wrapper-container">
-    <img src="/Images/logo.jpeg" alt="Logo">
+    <div class="wrapper-container">
+        <img src="/Images/logo.jpeg" alt="Logo">
 
-    <div class = "wrapper">
-        <form id="loginForm">
-            <h1>Login</h1>
+        <div class="wrapper">
+            <form id="loginForm">
+                <h1>Login</h1>
 
-            <div class = "input-box">
-                <input type="text", id="username" placeholder="username" required>
-                <i class='bx bxs-user-circle'></i>
-            </div>
+                <div class="input-box">
+                    <input type="email" id="email" placeholder="Email" required>
+                    <i class='bx bxs-user-circle'></i>
+                </div>
 
-            <div class = "input-box">
-                <input type="password", placeholder="password" id = "password" required>
-                <i class='bx bxs-low-vision' onclick="myfunction()"></i>
-                <!--<i class='bx bxs-lock'></i>-->
-            </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Password" id="password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                    <span class="toggle-password"><i class='bx bxs-low-vision'></i></span>
+                </div>
 
-            <div class = "remember-forgot">
-                <label><input type="checkbox">Remember Me
-                </label>
-                <a href="/forgotPassword.html" id="forgotPasswordLink">Forgot Password</a>
-            </div>
-            <div class = "onsubmit">
-                <button type = "submit" class="btn">Login</button>
-            </div>
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="/forgotPassword.html">Forgot password?</a>
+                    </div>
+                </div>
 
-            
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
 
-            <div class = "register-link">
-                <p>Need to Submit an Application? <a href="http://localhost:3000/PhaseI/apply.html">Apply</a></p>
-            </div>
-            <script>
-                document.getElementById('applyLink').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.location.href = '/apply.html';
-                });
-                </script>
-        </form>
+        <div class="register-link">
+            <p>Need to Submit an Application? <a href="http://localhost:3000/accountCreate.html">Apply</a></p>
+        </div>
     </div>
-</div>
-<script src="/loginVerify.js"></script>
+
+    <script src="/loginVerify.js"></script>
 </body>
 </html>

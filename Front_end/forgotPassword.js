@@ -10,34 +10,46 @@ document.addEventListener('DOMContentLoaded', () => {
     let userEmail = '';
     let resetToken = '';
     
-    // Step 1: Request verification code
-    emailForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        userEmail = document.getElementById('email').value;
+// Step 1: Request verification code
+emailForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    userEmail = document.getElementById('email').value.trim();
+    
+    if (!userEmail.includes('@')) {
+        statusMessage.textContent = 'Please enter a valid email';
+        statusMessage.style.color = 'red';
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/request-reset-code', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: userEmail })
+        });
         
-        try {
-            const response = await fetch('/api/request-reset-code', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: userEmail })
-            });
-            
-            const data = await response.json();
-            if (response.ok) {
-                emailStep.style.display = 'none';
-                codeStep.style.display = 'block';
-                statusMessage.textContent = 'Verification code sent to your email';
-                statusMessage.style.color = 'green';
-            } else {
-                statusMessage.textContent = data.message || 'Error sending code';
-                statusMessage.style.color = 'red';
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            statusMessage.textContent = 'Network error. Please try again.';
-            statusMessage.style.color = 'red';
+        // First check if the response is OK
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to send code');
         }
-    });
+
+        const data = await response.json();
+        emailStep.style.display = 'none';
+        codeStep.style.display = 'block';
+        statusMessage.textContent = data.message || 'Verification code sent to your email';
+        statusMessage.style.color = 'green';
+        
+        // For development only - remove in production
+        if (data.code) {
+            console.log('DEV: Your verification code is', data.code);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        statusMessage.textContent = error.message || 'Network error. Please try again.';
+        statusMessage.style.color = 'red';
+    }
+});
     
     // Step 2: Verify code
     codeForm.addEventListener('submit', async (e) => {

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
     <link rel="stylesheet" href="styleApp.css">
 </head>
+
 <body>
     <div class="container">
         <header>Create Your Account</header>
@@ -36,75 +38,61 @@
                 <i class="uil uil-navigator"></i>
             </button>
             <script>
-                document.getElementById('accountForm').addEventListener('submit', async function(e) {
+                document.getElementById('accountForm').addEventListener('submit', async (e) => {
                     e.preventDefault();
-                    
+
                     // Get form values
-                    const password = document.querySelector('input[name="password"]').value;
-                    const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
-                    
-                    // Validate passwords match
-                    if (password !== confirmPassword) {
-                        alert('Passwords do not match!');
-                        return; // Stop form submission
-                    }
-                    
-                    // Verify application was submitted
-                    if (!sessionStorage.getItem('applicationSubmitted')) {
-                        alert('Please complete the application first');
-                        window.location.href = '/apply.html';
+                    const formData = {
+                        username: document.getElementById('username').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        password: document.getElementById('password').value,
+                        confirmPassword: document.getElementById('confirmPassword').value
+                    };
+
+                    // Client-side validation
+                    const errors = [];
+                    if (!formData.username) errors.push("Username is required");
+                    if (!formData.email) errors.push("Email is required");
+                    if (!formData.password) errors.push("Password is required");
+                    if (formData.password !== formData.confirmPassword) errors.push("Passwords don't match");
+
+                    if (errors.length > 0) {
+                        alert(errors.join("\n"));
                         return;
                     }
-                
-                    // Show loading state
-                    const submitBtn = document.querySelector('button[type="submit"]');
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Creating Account...';
-                    
+
                     try {
-                        // Get form data
-                        const formData = new FormData(this);
-                        const accountData = Object.fromEntries(formData.entries());
-                        
-                        // Remove confirmPassword from data before sending
-                        delete accountData.confirmPassword;
-                        
-                        // Send to server
-                        const response = await fetch('/api/register-with-application', {
+                        console.log("Submitting:", formData); // Debug log
+
+                        const response = await fetch('/api/register', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                account: accountData,
-                                application: JSON.parse(sessionStorage.getItem('applicationData') || '{}')
+                                username: formData.username,
+                                email: formData.email,
+                                password: formData.password
                             })
                         });
-                        
-                        if (!response.ok) {
-                            throw new Error(await response.text());
-                        }
-                        
-                        // Show success message
-                        const confirmation = confirm('Account created successfully! Click OK to login.');
-                        if (confirmation) {
-                            // Clear temporary storage
-                            sessionStorage.removeItem('applicationSubmitted');
-                            sessionStorage.removeItem('applicationData');
-                            window.location.href = '/index.html';
-                        }
-                        
+
+                        const result = await response.json();
+                        console.log("Server response:", result); // Debug log
+
+                        if (!response.ok) throw new Error(result.error || 'Registration failed');
+
+                        alert('Account created successfully!');
+                        window.location.href = '/login.html';
+
                     } catch (error) {
-                        console.error('Error:', error);
-                        alert('Account creation failed: ' + error.message);
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'Create Account';
+                        console.error('Registration error:', error);
+                        alert(`Error: ${error.message}`);
                     }
                 });
-                </script>
+            </script>
         </form>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1356.0/aws-sdk.min.js"></script>
     <script src="/accountCreate.js"></script>
-    
+
 </body>
+
 </html>

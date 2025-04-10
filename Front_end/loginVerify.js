@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
 
             const formData = new FormData(accountForm);
+            const email = formData.get('email');
             const username = formData.get('username').trim();
             const password = formData.get('password');
             const confirmPassword = formData.get('confirmPassword');
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({ 
+                        email,
                         username, 
                         password,
                         token // if present
@@ -81,6 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
             const rememberMe = document.querySelector('#loginForm input[type="checkbox"]').checked;
 
+            if (!email || !password) {
+                alert('Could not find form fields');
+                return;
+            }
+
             try {
                 const response = await fetch('/api/login', {
                     method: 'POST',
@@ -96,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.ok) {
                     // Store login state if "Remember Me" is checked
                     if (rememberMe) {
-                        localStorage.setItem('rememberedUser', username);
+                        localStorage.setItem('rememberedUser', email);
                     }
                     window.location.href = 'http://18.205.114.254/dashboard.html';
                 } else {
@@ -108,10 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Auto-fill remembered username
+        // Auto-fill remembered email
         const rememberedUser = localStorage.getItem('rememberedUser');
         if (rememberedUser) {
-            document.getElementById('username').value = rememberedUser;
+            document.getElementById('email').value = rememberedUser;
             document.querySelector('#loginForm input[type="checkbox"]').checked = true;
         }
     }
