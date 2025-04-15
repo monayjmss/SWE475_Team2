@@ -1,58 +1,41 @@
-// Backend logic using Express to handle settings updates
+document.addEventListener('DOMContentLoaded', () => {
+  const emailSelect = document.getElementById('emailNotifications');
 
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const app = express();
-const port = process.env.PORT || 5000;
+  // Fetch current settings when page loads
+  fetch('http://localhost:5500/api/settings')
+      .then(res => res.json())
+      .then(data => {
+          if (data.emailNotifications) {
+              emailSelect.value = data.emailNotifications;
+          }
+      })
+      .catch(err => {
+          console.error('Error loading settings:', err);
+          alert('Failed to load settings.');
+      });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+  // Save settings when form is submitted
+  document.getElementById('settingsForm').addEventListener('submit', (e) => {
+      e.preventDefault();
 
-// Settings file path (JSON)
-const SETTINGS_FILE = path.join(__dirname, 'settings.json');
+      const newSettings = {
+          emailNotifications: emailSelect.value
+      };
 
-// Load current settings or default
-function loadSettings() {
-  if (fs.existsSync(SETTINGS_FILE)) {
-    return JSON.parse(fs.readFileSync(SETTINGS_FILE));
-  }
-  return {
-    emailNotifications: false,
-    judgeEvaluationMode: false
-  };
-}
-
-// Save settings to file
-function saveSettings(settings) {
-  fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2));
-}
-
-// GET current settings
-app.get('/api/settings', (req, res) => {
-  const settings = loadSettings();
-  res.json(settings);
-});
-
-// POST updated settings
-app.post('/api/settings', (req, res) => {
-  const { emailNotifications, judgeEvaluationMode } = req.body;
-
-  if (typeof emailNotifications !== 'boolean' || typeof judgeEvaluationMode !== 'boolean') {
-    return res.status(400).json({ error: 'Invalid setting values.' });
-  }
-
-  const updatedSettings = {
-    emailNotifications,
-    judgeEvaluationMode
-  };
-
-  saveSettings(updatedSettings);
-  res.status(200).json({ message: 'Settings updated successfully.' });
-});
-
-// Start server
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+      fetch('http://localhost:5500/api/settings', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newSettings)
+      })
+      .then(res => res.json())
+      .then(data => {
+          alert('✅ ' + data.message);
+      })
+      .catch(err => {
+          console.error('Error saving settings:', err);
+          alert('❌ Failed to save settings.');
+      });
+  });
 });
