@@ -1,85 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Settings Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Matching font from the screenshot */
-        body {
-            font-family: 'Georgia', serif;
-            background: url('Images/background2.jpeg') no-repeat center center fixed;
-            background-size: cover;
-            color: black;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
-        }
-
-        h1 {
-            font-size: 32px;
-            margin-top: 40px;
-            padding: 10px 20px;
-            border: 2px solid black;
-            display: inline-block;
-            border-radius: 10px;
-            background-color: white;
-        }
-
-        form {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.85);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        label {
-            font-size: 18px;
-            display: block;
-            margin-bottom: 10px;
-            text-align: left;
-        }
-
-        select {
-            padding: 10px;
-            width: 250px;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: black;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #333;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Admin Settings Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    .section {
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .note {
+      font-size: 0.9em;
+      color: #777;
+      margin-top: 5px;
+    }
+    button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Admin Settings Dashboard</h1>
 
-    <h1>Settings Dashboard</h1>
     <form id="settingsForm">
-        <label for="emailNotifications">Email Notifications:</label>
+      <div class="section">
+        <label for="emailNotifications">Email Notifications</label>
         <select id="emailNotifications">
-            <option value="enabled">Enabled</option>
-            <option value="disabled">Disabled</option>
+          <option value="enabled">Enabled</option>
+          <option value="disabled">Disabled</option>
         </select>
+        <p class="note">This controls whether email notifications are globally enabled for admin alerts.</p>
+      </div>
 
+      <div class="section">
         <button type="submit">Save Settings</button>
+      </div>
     </form>
+  </div>
 
-    <script src="settings.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const emailToggle = document.getElementById('emailNotifications');
+
+      // Load settings from settings server
+      fetch('http://localhost:5500/api/settings')
+        .then(res => res.json())
+        .then(data => {
+          if (data.emailNotifications) {
+            emailToggle.value = data.emailNotifications;
+          }
+        });
+
+      document.getElementById('settingsForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newSettings = {
+          emailNotifications: emailToggle.value
+        };
+
+        fetch('http://localhost:5500/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newSettings)
+        })
+        .then(res => res.json())
+        .then(data => alert(data.message))
+        .catch(err => alert('Error saving settings'));
+      });
+    });
+  </script>
 </body>
 </html>
