@@ -5,22 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Judges Dashboard</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background-color: #f4f4f4; }
-        button { margin-top: 10px; padding: 5px 10px; }
+        body {
+            font-family: 'Georgia', serif;
+            background: url('Images/background2.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 40px 20px;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border: 2px solid black;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        form {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 320px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+
+        table {
+            width: 90%;
+            max-width: 900px;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
     <h2>Judges Dashboard</h2>
+
     <form id="addJudgeForm">
         <input type="text" id="name" placeholder="Judge Name" required>
         <input type="email" id="email" placeholder="Email" required>
         <input type="text" id="expertise" placeholder="Expertise" required>
         <button type="submit">Add Judge</button>
     </form>
-    
+
     <table>
         <thead>
             <tr>
@@ -34,49 +109,102 @@
     </table>
 
     <script>
-        async function fetchJudges() {
-            const response = await fetch('/api/judges');
-            const judges = await response.json();
-            const tableBody = document.getElementById('judgesTableBody');
-            tableBody.innerHTML = '';
-
-            judges.forEach(judge => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${judge.name}</td>
-                    <td>${judge.email}</td>
-                    <td>${judge.expertise}</td>
-                    <td><button onclick="deleteJudge(${judge.id})">Remove</button></td>
-                `;
-                tableBody.appendChild(row);
-            });
+        // Debug logging helper
+        function logDebug(message, data) {
+            console.log(`[DEBUG] ${message}`, data || '');
         }
 
-        async function addJudge(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const expertise = document.getElementById('expertise').value;
-
-            const response = await fetch('/api/judges', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, expertise })
-            });
-
-            if (response.ok) {
-                document.getElementById('addJudgeForm').reset();
-                fetchJudges();
+        // Function to fetch all judges
+        async function fetchJudges() {
+            try {
+                logDebug('Fetching judges...');
+                const response = await fetch('/api/judges');
+                
+                if (!response.ok) {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+                
+                const judges = await response.json();
+                logDebug('Judges fetched successfully:', judges);
+                
+                const tableBody = document.getElementById('judgesTableBody');
+                tableBody.innerHTML = '';
+                
+                judges.forEach(judge => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${judge.name}</td>
+                        <td>${judge.email}</td>
+                        <td>${judge.expertise}</td>
+                        <td><button onclick="deleteJudge(${judge.id})">Remove</button></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                logDebug('Error fetching judges:', error.message);
+                alert('Failed to load judges. Check console for details.');
             }
         }
 
-        async function deleteJudge(id) {
-            await fetch(`/api/judges/${id}`, { method: 'DELETE' });
-            fetchJudges();
+        // Function to add a judge
+        async function addJudge(event) {
+            event.preventDefault();
+            logDebug('Add judge form submitted');
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const expertise = document.getElementById('expertise').value;
+            
+            logDebug('Form values:', { name, email, expertise });
+            
+            try {
+                const response = await fetch('/api/judges', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, expertise })
+                });
+                
+                logDebug('Add judge response status:', response.status);
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || `Server responded with status: ${response.status}`);
+                }
+                
+                document.getElementById('addJudgeForm').reset();
+                fetchJudges();
+                logDebug('Judge added successfully');
+            } catch (error) {
+                logDebug('Error adding judge:', error.message);
+                alert(`Failed to add judge: ${error.message}`);
+            }
         }
 
+        // Function to delete a judge
+        async function deleteJudge(id) {
+            if (!confirm('Are you sure you want to remove this judge?')) return;
+            
+            try {
+                logDebug('Deleting judge with ID:', id);
+                const response = await fetch(`/api/judges/${id}`, { method: 'DELETE' });
+                
+                if (!response.ok) {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+                
+                fetchJudges();
+                logDebug('Judge deleted successfully');
+            } catch (error) {
+                logDebug('Error deleting judge:', error.message);
+                alert('Failed to delete judge. Check console for details.');
+            }
+        }
+
+        // Add event listener for form submission
         document.getElementById('addJudgeForm').addEventListener('submit', addJudge);
-        fetchJudges();
+        
+        // Fetch judges when page loads
+        document.addEventListener('DOMContentLoaded', fetchJudges);
     </script>
 </body>
 </html>

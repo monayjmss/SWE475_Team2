@@ -1,12 +1,74 @@
 <!DOCTYPE html>
-<htnml lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Settings Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Matching font from the screenshot */
+        body {
+            font-family: 'Georgia', serif;
+            background: url('Images/background2.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-top: 40px;
+            padding: 10px 20px;
+            border: 2px solid black;
+            display: inline-block;
+            border-radius: 10px;
+            background-color: white;
+        }
+
+        form {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        select {
+            padding: 10px;
+            width: 250px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+    </style>
 </head>
 <body>
-    
+
     <h1>Settings Dashboard</h1>
     <form id="settingsForm">
         <label for="emailNotifications">Email Notifications:</label>
@@ -15,12 +77,9 @@
             <option value="disabled">Disabled</option>
         </select>
 
-        <label for="appDeadline">Application Deadline:</label>
-        <input type="date" id="appDeadline">
-
         <button type="submit">Save Settings</button>
     </form>
 
     <script src="settings.js"></script>
 </body>
-</htnml>
+</html>
