@@ -113,23 +113,23 @@
         function logDebug(message, data) {
             console.log(`[DEBUG] ${message}`, data || '');
         }
-
+    
         // Function to fetch all judges
         async function fetchJudges() {
             try {
                 logDebug('Fetching judges...');
                 const response = await fetch('/api/judges');
-                
+    
                 if (!response.ok) {
                     throw new Error(`Server responded with status: ${response.status}`);
                 }
-                
+    
                 const judges = await response.json();
                 logDebug('Judges fetched successfully:', judges);
-                
+    
                 const tableBody = document.getElementById('judgesTableBody');
                 tableBody.innerHTML = '';
-                
+    
                 judges.forEach(judge => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
@@ -145,32 +145,38 @@
                 alert('Failed to load judges. Check console for details.');
             }
         }
-
+    
         // Function to add a judge
         async function addJudge(event) {
             event.preventDefault();
             logDebug('Add judge form submitted');
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const expertise = document.getElementById('expertise').value;
-            
+    
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const expertise = document.getElementById('expertise').value.trim();
+    
             logDebug('Form values:', { name, email, expertise });
-            
+    
+            // Frontend validation
+            if (!/^[A-Za-z\s'-]{2,}$/.test(name)) {
+                alert('Please enter a valid name (letters, spaces, hyphens, apostrophes only, min 2 characters).');
+                return;
+            }
+    
             try {
                 const response = await fetch('/api/judges', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, expertise })
                 });
-                
+    
                 logDebug('Add judge response status:', response.status);
-                
+    
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(errorData.message || `Server responded with status: ${response.status}`);
                 }
-                
+    
                 document.getElementById('addJudgeForm').reset();
                 fetchJudges();
                 logDebug('Judge added successfully');
@@ -179,19 +185,19 @@
                 alert(`Failed to add judge: ${error.message}`);
             }
         }
-
+    
         // Function to delete a judge
         async function deleteJudge(id) {
             if (!confirm('Are you sure you want to remove this judge?')) return;
-            
+    
             try {
                 logDebug('Deleting judge with ID:', id);
                 const response = await fetch(`/api/judges/${id}`, { method: 'DELETE' });
-                
+    
                 if (!response.ok) {
                     throw new Error(`Server responded with status: ${response.status}`);
                 }
-                
+    
                 fetchJudges();
                 logDebug('Judge deleted successfully');
             } catch (error) {
@@ -199,12 +205,13 @@
                 alert('Failed to delete judge. Check console for details.');
             }
         }
-
+    
         // Add event listener for form submission
         document.getElementById('addJudgeForm').addEventListener('submit', addJudge);
-        
+    
         // Fetch judges when page loads
         document.addEventListener('DOMContentLoaded', fetchJudges);
     </script>
+    
 </body>
 </html>
