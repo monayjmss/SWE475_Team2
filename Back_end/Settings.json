@@ -1,3 +1,7 @@
 {
-  "emailNotifications": "enabled"
+  "emailNotifications": "enabled",
+  "emailSubject": "Your Application Update",
+  "emailTemplate": "Dear {{name}}, we’ve received your application.",
+  "interviewToggle": "enabled",
+  "reportFrequency": "weekly"
 }
